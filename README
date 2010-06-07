@@ -7,14 +7,17 @@ To compile and install the module:
 $ ./configure --without-http --without-http-cache --add-module=/path/to/nginx_flash_policy
 $ make && make install
 
-nginx.conf
+[nginx.conf]
 
 flash_policy
 {
 	server
 	{
 		listen 843;
+		allow_access_from example1.com:123 example2.com example3:456-789;
 	}
 }
+
+If allow_access_from is not provided, the default allowed access is *:*.
 
 The module is adapted from nginx's original mail module and may be buggy and feature-incomplete.
