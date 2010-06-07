@@ -155,7 +155,7 @@ ngx_gp_core_merge_srv_conf(ngx_conf_t *cf, void *parent, void *child)
     ngx_gp_core_srv_conf_t *prev = parent;
     ngx_gp_core_srv_conf_t *conf = child;
 
-    ngx_conf_merge_msec_value(conf->timeout, prev->timeout, 60000);
+    ngx_conf_merge_msec_value(conf->timeout, prev->timeout, 3000);
 
     ngx_conf_merge_value(conf->so_keepalive, prev->so_keepalive, 0);
 
