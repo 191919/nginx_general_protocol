@@ -1,0 +1,3 @@
+ngx_addon_name=ngx_flash_policy_module
+CORE_MODULES="$CORE_MODULES ngx_gp_module ngx_gp_core_module ngx_gp_flash_policy_module"
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/ngx_gp.c $ngx_addon_dir/ngx_gp_core_module.c $ngx_addon_dir/ngx_gp_handler.c $ngx_addon_dir/ngx_gp_parse.c $ngx_addon_dir/ngx_gp_flash_policy_handler.c $ngx_addon_dir/ngx_gp_flash_policy_module.c"

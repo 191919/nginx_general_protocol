@@ -1,0 +1,20 @@
+nginx_flash_policy is a demo-purpose nginx module to demonstrate how to write an nginx module to serve custom protocols.
+
+nginx_flash_policy serves Flash cross-domain requests:
+
+To compile and install the module:
+
+$ ./configure --without-http --without-http-cache --add-module=/path/to/nginx_flash_policy
+$ make && make install
+
+nginx.conf
+
+flash_policy
+{
+	server
+	{
+		listen 843;
+	}
+}
+
+The module is adapted from nginx's original mail module and may be buggy and feature-incomplete.
