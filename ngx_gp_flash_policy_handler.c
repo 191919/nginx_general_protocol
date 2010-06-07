@@ -13,14 +13,7 @@
 
 static ngx_int_t ngx_gp_flash_policy_user(ngx_gp_session_t *s, ngx_connection_t *c);
 
-static u_char  pop3_invalid_command[] = "<error type=\"bad request\"/>" CRLF;
-
-static u_char cross_domain_policy[] =
-"<?xml version=\"1.0\"?>"
-"<cross-domain-policy>"
-"<site-control permitted-cross-domain-policies=\"all\"/>"
-"<allow-access-from domain=\"*\" to-ports=\"*\" />"
-"</cross-domain-policy>";
+static u_char  gp_flash_policy_invalid_command[] = "<error type=\"bad request\"/>" CRLF;
 
 void
 ngx_gp_flash_policy_init_session(ngx_gp_session_t *s, ngx_connection_t *c)
@@ -145,7 +138,7 @@ ngx_gp_flash_policy_auth_state(ngx_event_t *rev)
         s->gp_state = ngx_flash_policy_start;
         s->state = 0;
 
-        ngx_str_set(&s->out, pop3_invalid_command);
+        ngx_str_set(&s->out, gp_flash_policy_invalid_command);
 
         /* fall through */
 
@@ -153,17 +146,19 @@ ngx_gp_flash_policy_auth_state(ngx_event_t *rev)
 
         s->buffer->pos = s->buffer->start;
         s->buffer->last = s->buffer->start;
+		s->quit = 1;
 
         ngx_gp_send(c->write);
-		s->quit = 1;
     }
 }
 
 static ngx_int_t
 ngx_gp_flash_policy_user(ngx_gp_session_t *s, ngx_connection_t *c)
 {
-	ngx_str_set(&s->out, cross_domain_policy);
-
+	ngx_gp_flash_policy_srv_conf_t  *pscf;
+	pscf = ngx_gp_get_module_srv_conf(s, ngx_gp_flash_policy_module);
+	
+	s->out = pscf->policy_content;
     s->gp_state = ngx_flash_policy_user;
 
     return NGX_OK;

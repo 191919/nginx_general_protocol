@@ -14,6 +14,7 @@
 
 
 typedef struct {
+	ngx_str_t    policy_content;
     ngx_array_t  allow_access_froms;
 } ngx_gp_flash_policy_srv_conf_t;
 

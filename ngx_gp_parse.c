@@ -17,15 +17,15 @@ Flash Player sends:
 
 We reply:
 
-"<?xml version=\"1.0\"?>"
-"<cross-domain-policy>"
-"<site-control permitted-cross-domain-policies=\"all\"/>"
-"<allow-access-from domain=\"*\" to-ports=\"*\" />"
-"</cross-domain-policy>"
+"<?xml version=\"1.0\"?>" CRLF
+"<cross-domain-policy>" CRLF
+"<site-control permitted-cross-domain-policies=\"all\"/>" CRLF
+[multiple] : "<allow-access-from domain=\"...\" to-ports=\"...\" />" CRLF
+"</cross-domain-policy>" CRLF
 
 */
 
-static u_char flash_request[] = "<policy-file-request/>";
+static u_char flash_request[] = "<policy-file-request/>"; /* including the terminal \0 */
 
 ngx_int_t
 ngx_gp_flash_policy_parse_command(ngx_gp_session_t *s)
