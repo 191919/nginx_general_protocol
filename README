@@ -1,6 +1,6 @@
 nginx_flash_policy is a demo-purpose nginx module to demonstrate how to write an nginx module to serve custom protocols.
 
-nginx_flash_policy serves Flash cross-domain requests:
+nginx_flash_policy serves Flash cross-domain requests.
 
 To compile and install the module:
 
