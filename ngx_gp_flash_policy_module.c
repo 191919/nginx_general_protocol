@@ -184,17 +184,25 @@ ngx_gp_flash_policy_merge_srv_conf(ngx_conf_t *cf, void *parent, void *child)
 		u_char buf[256];
 		size_t len;
 		int f = 0;
-		char* b = ngx_strchr(c[i].data, ':');
-		if (b == NULL)
-		{
-			b = "*";
+		char* b = NULL;
+		/* we cannot use the in-place truncating trick on read-only buffer */
+		if (ngx_memcmp(c[i].data, "*:*", sizeof("*:*") - 1) == 0) {
+			len = ngx_cpymem(buf,
+				"<allow-access-from domain=\"*\" to-ports=\"*\" />" CRLF,
+				sizeof("<allow-access-from domain=\"*\" to-ports=\"*\" />" CRLF) - 1) - buf;
+		} else {
+			b = ngx_strchr(c[i].data, ':');
+			if (b == NULL)
+			{
+				b = "*";
+			}
+			else
+			{
+				*b++ = '\0';
+				f = 1;
+			}
+			len = ngx_snprintf(buf, sizeof(buf)-1, "<allow-access-from domain=\"%s\" to-ports=\"%s\" />" CRLF, c[i].data, b) - buf;
 		}
-		else
-		{
-			*b++ = '\0';
-			f = 1;
-		}
-		len = ngx_snprintf(buf, sizeof(buf)-1, "<allow-access-from domain=\"%s\" to-ports=\"%s\" />" CRLF, c[i].data, b) - buf;
         p = ngx_cpymem(p, buf, len);
 		if (f) {
 			*b = ':';
