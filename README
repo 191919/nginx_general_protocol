@@ -22,5 +22,8 @@ flash_policy
 If allow_access_from is not provided, the default allowed access is *:*.
 
 The module is adapted from nginx's original mail module and may be buggy and feature-incomplete.
+Contact me if you have any questions.
 
 This module is written for and tested under nginx-0.8.40.
+
+This module is distributed under BSD license.
